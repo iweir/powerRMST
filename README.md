@@ -9,7 +9,7 @@ all_reconstructed_data.txt
       Variable "Arm" indicates treatment assignment to experimental arm (1) or control arm (0)
   
   
-ssrmst_IW with iterative SS process.R 
+sample size.R 
   
     Includes R code for function to determine power under a given sample size using a 
       non-inferiority margin based on the difference in RMST. 

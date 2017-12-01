@@ -1,16 +1,16 @@
 # Sample size determination code: 
-## includes 1. function (ssrmst_IW) to compute power under a given sample size with other specified parameters.
+## includes 1. function (powerRMST) to compute power under a given sample size with other specified parameters.
 ## includes 2. iterative process for sample size determination for a target power
 
 
-# 1. ssrmst_IW():  function to determine power under a specified sample size   
+# 1. powerRMST():  function to determine power under a specified sample size   
 ## Takes as inputs a sample size (n), accrual period (ac_period), length of trial (tot_time), time horizon (tau)
 ## Weibull scale parameter for Control arm(scale0),Weibull scale parameter for Experimental arm(scale1),
 ## Weibull shape parameter (shape), non-inferiority margin (margin), allocation ratio (allocation1),
 ## alpha level (one_sided_alpha), seed (seed). 
 
 
-ssrmst_IW <-
+powerRMST <-
   function(n, ac_period, tot_time, tau, scale0, scale1, shape=1, margin=0, allocation1=0.5, one_sided_alpha=0.025, seed=NULL){
 
     ac_rate = n / ac_period
@@ -34,7 +34,7 @@ ssrmst_IW <-
       set.seed(seed)
     }
     
-    for (w in 1:7000){
+    for (w in 1:20000){
 
       ##-- data frame --
       E             = rweibull(n0, shape, scale0)
@@ -78,7 +78,7 @@ ssrmst_IW <-
     }
 
     ###--- power ---
-    power = sum(answer)/7000
+    power = sum(answer)/20000
 
 
     ###--- output ---
@@ -118,20 +118,20 @@ ssrmst_IW <-
 ninit<-0
 
 repeat{
-  if (ssrmst_IW(n=ninit+1000, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power > inputs$design_power[i]) {break}
+  if (powerRMST(n=ninit+1000, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power > inputs$design_power[i]) {break}
   ninit <- ninit+1000
 }
 
 repeat{
-  if (ssrmst_IW(n=ninit+100, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power > inputs$design_power[i]) {break}
+  if (powerRMST(n=ninit+100, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power > inputs$design_power[i]) {break}
   ninit <- ninit+100
 }
 
 repeat{
-  if (ssrmst_IW(n=ninit+10, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power > inputs$design_power[i]) {break}
+  if (powerRMST(n=ninit+10, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power > inputs$design_power[i]) {break}
   ninit <- ninit+10
 }
 
 answer$ss_margin_presp_conv[i] <- ninit+10
-answer$pw_margin_presp_conv[i] <- ssrmst_IW(n=ninit+10, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power
+answer$pw_margin_presp_conv[i] <- powerRMST(n=ninit+10, ac_period=inputs$ac_period[i], tot_time=inputs$tot_time[i], tau=inputs$tau[i], scale0=inputs$scale[i], scale1=inputs$scale[i], shape=inputs$shape[i], margin=inputs$margin_presp_conv[i], allocation1=inputs$allocation1[i], one_sided_alpha=inputs$one_sided_alpha[i])$power
 

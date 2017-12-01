@@ -82,7 +82,6 @@ powerRMST <-
 
 
     ###--- output ---
-    #out = matrix(0,2,3)
     out = matrix(0,1,3)
 
     out[1,1] = n0+n1
@@ -90,7 +89,6 @@ powerRMST <-
     out[1,3] = n1
 
 
-    #rownames(out) = c("Sample size", "Expected number of events")
     rownames(out) = c("Sample size")	
     colnames(out) = c("Total", "arm0", "arm1")
 

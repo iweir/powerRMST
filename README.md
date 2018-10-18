@@ -8,6 +8,7 @@ all_reconstructed_data.txt
       Variable "Event" indicates whether subject had event (1) or not (0)
       Variable "Arm" indicates treatment assignment to experimental arm (1) or control arm (0)
   
+    We ask that if you use these data to please cite our paper: https://www.ncbi.nlm.nih.gov/pubmed/30074407
   
 sample size.R 
   

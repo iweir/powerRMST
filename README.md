@@ -4,6 +4,7 @@ This project contains the material in support of the following paper: Weir, IR.,
 We ask that if you use these data to please include the above citation. 
 
 all_reconstructed_data_corrected02MAY2024.txt
+
     reconstructed data for 35 non-inferiority clinical trials included in all_reconstructed_data_corrected02MAY2024.txt
       All 35 trials (variables "ID" and "trialname") have time to event outcomes. One row per subject. 
       Variable "Time" indicates time of event occurence
